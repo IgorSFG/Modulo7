@@ -1,10 +1,13 @@
 # Visão Geral do Currículo em Docker
-O projeto tem como objetivo a criação de um container com todo o conteúdo necessário para executar uma aplicação em Python que apresenta uma página HTML do meu currículo de estudante.
+O projeto tem como objetivo a criação de um container com todo o conteúdo necessário para executar uma aplicação web que apresente uma página HTML do meu currículo de estudante.
 
 # Processo de Desenvolvimento
-Para a criação do container foi utilizada a Docker engine, seguindo um processo de alocação de conteúdo e criação de imagem.
-- Primeiramente, foi determinado o que o container deverá 
+Para a criação da aplicação web, foi utilizado Python e o framework "fastapi".
+Para o container, foi utilizado a Docker engine, seguindo um processo de alocação de conteúdo e criação de imagem.
+- Primeiramente, foi feito a lista de requisitos para a execução do sistema.
+- Seguidamente, foi feito um "Dockerfile" para configuração das intruções a serem seguidas no momento que a imagem é concebida. Ele contém a lingugem de programação usada, assim como sua versão, o diretório onde serão armazenados os arquivos, a intalação de dependências e o comando para executar a aplicação web.
 
+eu parei aqui, estear egg
 # Tartagira em Ação!
 Inicializado o nó do turtlesim em um terminal com:
 ```
