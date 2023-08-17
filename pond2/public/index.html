@@ -5,20 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="supaboy.js"></script>
+    <link rel="stylesheet" href="style.css">
     <title>Pokelist</title>
 </head>
 
 <body>
-    <input type="text" id="name" placeholder="Nome do Pokemon">
-    <input type="file" id="image">
-    
-    <button id="send">Enviar</button>
-    <button id="update">Atualizar</button>
-    <button id="delete">Deletar</button>
-    <br>
-
-    <div id="poke-image"></div>
-    <div id="poke-name"></div>
+    <div class="container">
+        <div class="input-section">
+            <input type="file" id="image" class="input-file">
+            <input type="text" id="name" class="input-text" placeholder="Nome do Pokemon">
+            <button id="send" class="btn">Send</button>
+            <button id="update" class="btn">Update</button>
+            <button id="delete" class="btn">Delete</button>
+        </div>
+        <div id="data-list" class="image-gallery"></div>
+    </div>
 </body>
 
 </html>

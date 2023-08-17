@@ -1,32 +1,57 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-
-const url = "https://tmtxhmoxwgwgezkbjjhn.supabase.co"
-const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtdHhobW94d2d3Z2V6a2JqamhuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MjA0MjU0MiwiZXhwIjoyMDA3NjE4NTQyfQ.TKYq-hQ2jEX9IzDLIXgwQr_2Gp3NXx91VP0k07JGWjU"
-const supabase = createClient(url, key)
-const bucket = "Pokelist"
+const bucket = "Pokelist";
+const supabase = createClient(
+    "https://tmtxhmoxwgwgezkbjjhn.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtdHhobW94d2d3Z2V6a2JqamhuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MjA0MjU0MiwiZXhwIjoyMDA3NjE4NTQyfQ.TKYq-hQ2jEX9IzDLIXgwQr_2Gp3NXx91VP0k07JGWjU"
+);
 
 async function fetchPokemon() {
-    const { data, error } = await supabase.storage.from(bucket).list();
-    console.log(data);
-}
+    const imageGallery = document.getElementById('data-list');
 
-async function sendPokemon(image64, name) {
-    const { data, error } = await supabase.storage.from(bucket).upload(`${name}.png`, image64, {
+    const { data, error } = await supabase.storage.from(bucket).list();
+
+    for (let i = 1; i < data.length; i++) {
+        const pokemon = data[i];
+        console.log(pokemon);
+        
+        const pokeData = await supabase.storage.from(bucket).getPublicUrl(pokemon.name);
+        const pokeUrl = pokeData.data.publicUrl;
+        console.log(pokeUrl);
+        
+        const imageContainer = document.createElement('div'); // Create a container div
+        imageContainer.classList.add('image-container'); // Add a CSS class for styling
+        
+        const imageElement = document.createElement('img');
+        imageElement.src = pokeUrl;
+        imageElement.alt = pokemon.name;
+        
+        const nameElement = document.createElement('p'); // Create a paragraph for the name
+        nameElement.textContent = pokemon.name;
+        
+        imageContainer.appendChild(imageElement);
+        imageContainer.appendChild(nameElement); // Append the name to the container
+        
+        imageGallery.appendChild(imageContainer);
+    };
+};
+
+async function sendPokemon(image, name) {
+    const { data, error } = await supabase.storage.from(bucket).upload(name, image, {
         cacheControl: 3600,
         upsert: false,
     });
 };
 
-async function updatePokemon(image64, name) {
-    const { data, error } = await supabase.storage.from(bucket).update(`${name}.png`, image64, {
+async function updatePokemon(image, name) {
+    const { data, error } = await supabase.storage.from(bucket).update(name, image, {
         cacheControl: 3600,
         upsert: true,
     });
 };
 
 async function deletePokemon(name) {
-    const { data, error } = await supabase.storage.from(bucket).remove(`${name}.png`);
+    const { data, error } = await supabase.storage.from(bucket).remove(name);
 };
 
 // Get references to the buttons
@@ -47,22 +72,15 @@ function Pokemon(action) {
     if (image_input.files.length != 0 && name != "") {
       
         const file = image_input.files[0];
-        const reader = new FileReader();
     
         if (file) {
-            const base64Image = reader.result;
             console.log(file);
-
             if (action == "send") sendPokemon(file, name);
             else if (action == "update") updatePokemon(file, name);
         };
-
-        if (action == "delete") deletePokemon(name);
-    
-        // if (file) {
-        //     reader.readAsDataURL(file);
-        // }
     };
+
+    if (action == "delete" && name != "") deletePokemon(name);
 };
 
 window.addEventListener('load', () => {
