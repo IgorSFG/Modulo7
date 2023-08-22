@@ -11,7 +11,7 @@ async function fetchPokemon() {
 
     const { data, error } = await supabase.storage.from(bucket).list();
 
-    for (let i = 1; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
         const pokemon = data[i];
         console.log(pokemon);
         
@@ -28,41 +28,58 @@ async function fetchPokemon() {
         
         const nameElement = document.createElement('p'); // Create a paragraph for the name
         nameElement.textContent = pokemon.name;
+        nameElement.contentEditable = false;
+        nameElement.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const newName = event.target.textContent;
+                console.log(newName);
+                if (newName !== pokemon.name) updatePokemon(pokemon.name, newName);
+            }
+        });
+
+        const updateButton = document.createElement('button'); // Create an update button
+        updateButton.textContent = 'Rename';
+        updateButton.addEventListener('click', () => {
+            nameElement.contentEditable = !nameElement.isContentEditable;
+            nameElement.focus();
+        });
+
+        const deleteButton = document.createElement('button'); // Create a delete button
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', () => deletePokemon(pokemon.name));
         
-        imageContainer.appendChild(imageElement);
+        imageContainer.appendChild(deleteButton); // Append the delete button
+        imageContainer.appendChild(updateButton); // Append the update button
+        imageContainer.appendChild(imageElement); // Append the image to the container
         imageContainer.appendChild(nameElement); // Append the name to the container
         
-        imageGallery.appendChild(imageContainer);
+        imageGallery.appendChild(imageContainer); // Append the container to the gallery
     };
 };
 
 async function sendPokemon(image, name) {
-    const { data, error } = await supabase.storage.from(bucket).upload(name, image, {
-        cacheControl: 3600,
-        upsert: false,
-    });
+    const { data, error } = await supabase.storage.from(bucket).upload(name, image);
+    if (data) window.location.reload();
 };
 
-async function updatePokemon(image, name) {
-    const { data, error } = await supabase.storage.from(bucket).update(name, image, {
-        cacheControl: 3600,
-        upsert: true,
-    });
-};
+async function updatePokemon(oldName, newName) {
+    const { data, error } = await supabase.storage.from(bucket).copy(oldName, newName);
+    if (!error) {
+        console.log(`Name updated from ${oldName} to ${newName}`);
+    } else {
+        console.error(`Error updating name: ${error.message}`);
+    }
+    deletePokemon(oldName);
+}
 
 async function deletePokemon(name) {
     const { data, error } = await supabase.storage.from(bucket).remove(name);
+    if (data) window.location.reload();
 };
 
-// Get references to the buttons
 const sendButton = document.getElementById("send");
-const updateButton = document.getElementById("update");
-const deleteButton = document.getElementById("delete");
-
-// Add event listeners to the buttons
 sendButton.addEventListener("click", () => Pokemon('send'));
-updateButton.addEventListener("click", () => Pokemon('update'));
-deleteButton.addEventListener("click", () => Pokemon('delete'));
 
 function Pokemon(action) {
     console.log(action);
@@ -75,12 +92,9 @@ function Pokemon(action) {
     
         if (file) {
             console.log(file);
-            if (action == "send") sendPokemon(file, name);
-            else if (action == "update") updatePokemon(file, name);
+            sendPokemon(file, name);
         };
     };
-
-    if (action == "delete" && name != "") deletePokemon(name);
 };
 
 window.addEventListener('load', () => {

@@ -6,7 +6,11 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/public/frontend/login.html');
+});
+
+app.get('/pokelist', (req, res) => {
+  res.sendFile(__dirname + '/public/frontend/pokelist.html');
 });
 
 app.listen(PORT, () => {
