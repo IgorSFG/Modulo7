@@ -6,13 +6,13 @@ const supabase = createClient(
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtdHhobW94d2d3Z2V6a2JqamhuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MjA0MjU0MiwiZXhwIjoyMDA3NjE4NTQyfQ.TKYq-hQ2jEX9IzDLIXgwQr_2Gp3NXx91VP0k07JGWjU"
 );
 
-const form = document.getElementById('cadasterForm');
+const loginform = document.getElementById('loginForm');
 
-form.addEventListener('submit', async (event) => {
-  //event.preventDefault();
+loginform.addEventListener('submit', async (event) => {
+  event.preventDefault();
 
-  const name = form.name.value;
-  const password = form.password.value;
+  const name = loginform.name.value;
+  const password = loginform.password.value;
 
   const { data, error } = await supabase.from(table).select()
 
@@ -20,9 +20,10 @@ form.addEventListener('submit', async (event) => {
     console.error('Error:', error.message);
   } else {
     data.forEach(user => {
-        //if ()
-    console.log('User Lo:', data);
-    form.reset();
+        if (user.name === name && user.password === password) {
+            window.location.href = "index.html";
+        }
+    loginform.reset();
     });
   }
 });
