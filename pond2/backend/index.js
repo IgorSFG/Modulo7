@@ -1,21 +1,45 @@
-const { createClient } = require('@supabase/supabase-js');
+const { Pool } = require('pg');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-const path = require("path")
+const path = require('path');
+
 const app = express();
 const PORT = 3000;
 const secretKey = 'your-secret-key';
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname,"../frontend")));
+app.use(express.static(path.join(__dirname, '../frontend')));
 
-const table = "Users";
-const supabase = createClient(
-    "https://tmtxhmoxwgwgezkbjjhn.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtdHhobW94d2d3Z2V6a2JqamhuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MjA0MjU0MiwiZXhwIjoyMDA3NjE4NTQyfQ.TKYq-hQ2jEX9IzDLIXgwQr_2Gp3NXx91VP0k07JGWjU"
-);
+const client = new Pool({
+  user: 'postgres',
+  host: '127.0.0.1',
+  database: 'todoapp',
+  password: 'postgres',
+  port: 5432,
+});
+
+async function createUserTable(client) {
+  const userTable = `CREATE TABLE IF NOT EXISTS Users (
+    id SERIAL PRIMARY KEY,
+    usr VARCHAR(50) UNIQUE NOT NULL,
+    pwd VARCHAR(50) NOT NULL
+  )`;
+
+  try {
+    await client.query(userTable);
+    console.log('Created "Users" table');
+  } catch (error) {
+    console.error('Error creating "Users" table:', error);
+    throw error;
+  }
+
+  // const insertTest = `INSERT INTO Users (usr, pwd) VALUES ($1, $2)`;
+  // await client.query(insertTest, ['test', 'test123']);
+  // console.log('Test user inserted');
+}
+
 
 // Generate JWT token for a user
 function generateToken(user) {
@@ -39,27 +63,32 @@ function authenticateToken(req, res, next) {
   });
 }
 
-app.get('/', (req, res) => {
-  const filePath = path.join(__dirname, '../frontend/pages/', 'login.html');
+app.get('/', async (req, res) => {
+  createUserTable(client);
+  const filePath = path.join(__dirname, '../frontend/pages', 'login.html');
   res.sendFile(filePath);
 });
 
 app.post('/login', async (req, res) => {
   console.log(req.body);
   const { username, password } = req.body;
-  const { data, error } = await supabase.from(table).select();
-  const user = data.find(u => u.username === username && u.password === password);
+  
+  // Query the database to check if the user exists
+  const query = `SELECT * FROM Users WHERE usr = $1 AND pwd = $2`;
+  const { rows } = await client.query(query, [username, password]);
 
-  if (!user) return res.sendStatus(404);
+  if (rows.length === 0) {
+    return res.sendStatus(404);
+  }
 
-  console.log(user);
+  const user = rows[0];
   const token = generateToken(user);
   res.cookie('token', token, { httpOnly: true });
   res.json({ token });
 });
 
 app.get('/pokelist', authenticateToken, (req, res) => {
-  const filePath = path.join(__dirname, '../frontend/pages/', 'pokelist.html');
+  const filePath = path.join(__dirname, '../frontend/pages', 'pokelist.html');
   res.sendFile(filePath);
 });
 
