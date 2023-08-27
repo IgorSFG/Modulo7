@@ -6,7 +6,7 @@ const db = require('./db');
 
 const app = express();
 const PORT = 3000;
-const secretKey = 'your-secret-key';
+const secretKey = 'MySecretKey';
 
 app.use(express.json());
 app.use(cookieParser());
@@ -36,8 +36,6 @@ function authenticateToken(req, res, next) {
 }
 
 app.get('/', async (req, res) => {
-  //db.createUserTable();
-  //db.insertUser();
   const filePath = path.join(__dirname, '../frontend/pages', 'login.html');
   res.sendFile(filePath);
 });
@@ -48,9 +46,7 @@ app.post('/login', async (req, res) => {
   
   const rows = await db.getUser(username, password);
 
-  if (rows.length === 0) {
-    return res.sendStatus(404);
-  }
+  if (!(rows > 0)) return res.sendStatus(404);
 
   const user = rows[0];
   console.log(user);
@@ -59,7 +55,7 @@ app.post('/login', async (req, res) => {
   res.json({ token });
 });
 
-app.get('/pokelist', authenticateToken, (req, res) => {
+app.get('/pokelist/:username', authenticateToken, (req, res) => {
   const filePath = path.join(__dirname, '../frontend/pages', 'pokelist.html');
   res.sendFile(filePath);
 });

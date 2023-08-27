@@ -118,7 +118,7 @@ async function insertPoke(user_id, pokename='teste', pokeimage='teste123') {
     }
 }
 
-async function getPoke(user_id, pokename='teste', pokeimage='teste123') {
+async function getPoke(user_id, pokename, pokeimage) {
     const get = 'SELECT * FROM Poke WHERE user_id = $1 AND pokename = $2 AND pokeimage = $3';
     const values = [user_id, pokename, pokeimage];
 
