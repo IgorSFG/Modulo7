@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Generate JWT token for a user
 function generateToken(user) {
-  return jwt.sign({ user_id: user.user_id, username: user.username, password: user.password }, secretKey, { expiresIn: '1h' });
+  return jwt.sign({ user_id: user.user_id, username: user.username, password: user.password }, secretKey, { expiresIn: '1m' });
 }
 
 // Middleware to authenticate token
@@ -46,7 +46,7 @@ app.post('/login', async (req, res) => {
   
   const rows = await db.getUser(username, password);
 
-  if (!(rows > 0)) return res.sendStatus(404);
+  if (rows.length < 1) return res.sendStatus(404);
 
   const user = rows[0];
   console.log(user);

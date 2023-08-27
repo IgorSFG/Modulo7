@@ -49,7 +49,6 @@ async function getUser(username, password) {
     try {
       const result = await pool.query(get, values);
       console.log('User fetched');
-      console.log(result);
       return result.rows;
     } catch (error) {
       console.error('Error fetching Users: ', error);

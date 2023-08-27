@@ -3,20 +3,26 @@ services:
   postgres:
     image: postgres:latest
     container_name: postgres
-    ports: "5432:5432"
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
 
   backend:
-    image:   # Replace with your image name
+    image: igorsfg/backpoke:1.0
     container_name: backend
-    ports: "5000:5000"
-    depends_on: postgres
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
 
   frontend:
-    image:   # Replace with your image name
+    image: igorsfg/frontpoke:1.0
     container_name: frontend
-    ports: "3000:3000"
-    depends_on: backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - backend
+
