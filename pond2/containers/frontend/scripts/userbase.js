@@ -18,9 +18,9 @@ loginform.addEventListener('submit', async (event) => {
       },
       body: JSON.stringify({ username: username, password: password })
   })
-  .then(async(response) => {
+  .then((response) => {
     if (response.ok) {
-      window.location.href = (`/pokelist/${username}`);
+      window.location.href = (`/pokelist`);
     } else {
       console.error('Login failed');
       alert('Login failed');

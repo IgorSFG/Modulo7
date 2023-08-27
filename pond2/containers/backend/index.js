@@ -55,7 +55,7 @@ app.post('/login', async (req, res) => {
   res.json({ token });
 });
 
-app.get('/pokelist/:username', authenticateToken, (req, res) => {
+app.get('/pokelist', authenticateToken, (req, res) => {
   const filePath = path.join(__dirname, '../frontend/pages', 'pokelist.html');
   res.sendFile(filePath);
 });
