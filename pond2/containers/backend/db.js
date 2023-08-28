@@ -15,7 +15,7 @@ async function createUserTable() {
     const userTable = `CREATE TABLE IF NOT EXISTS Users (
       user_id SERIAL PRIMARY KEY,
       username VARCHAR(50) UNIQUE NOT NULL,
-      password VARCHAR(50) NOT NULL
+      userpassword VARCHAR(50) NOT NULL
     )`;
   
     try {
@@ -28,9 +28,9 @@ async function createUserTable() {
 }
 
 // Insert
-async function insertUser(username='teste', password='teste123') {
-    const insert = `INSERT INTO Users (username, password) VALUES ($1, $2)`;
-    const values = [username, password];
+async function insertUser(username='teste', userpassword='teste123') {
+    const insert = `INSERT INTO Users (username, userpassword) VALUES ($1, $2)`;
+    const values = [username, userpassword];
     
     try {
         await pool.query(insert, values);
@@ -42,9 +42,9 @@ async function insertUser(username='teste', password='teste123') {
 }
 
 // Read
-async function getUser(username, password) {
-    const get = 'SELECT * FROM Users WHERE username = $1 AND password = $2';
-    const values = [username, password];
+async function getUser(username, userpassword) {
+    const get = 'SELECT * FROM Users WHERE username = $1 AND userpassword = $2';
+    const values = [username, userpassword];
   
     try {
       const result = await pool.query(get, values);
@@ -58,9 +58,9 @@ async function getUser(username, password) {
   
 // Update
 async function updateUser(user_id, updates) {
-    const { username, password } = updates;
-    const update = 'UPDATE Users SET username = $2, password = $3 WHERE user_id = $1';
-    const values = [user_id, username, password];
+    const { username, userpassword } = updates;
+    const update = 'UPDATE Users SET username = $2, userpassword = $3 WHERE user_id = $1';
+    const values = [user_id, username, userpassword];
   
     try {
       const result = await pool.query(update, values);

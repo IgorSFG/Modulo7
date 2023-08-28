@@ -1,8 +1,11 @@
 version: '3'
-services:
+services:   
   postgres:
-    image: postgres:latest
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
     container_name: postgres
+    restart: always
     ports:
       - "5432:5432"
     environment:
@@ -10,19 +13,23 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
 
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
   backend:
-    image: igorsfg/backpoke:1.0
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
     container_name: backend
     ports:
       - "8000:8000"
     depends_on:
       - postgres
-
-  frontend:
-    image: igorsfg/frontpoke:1.0
-    container_name: frontend
-    ports:
-      - "5000:5000"
-    depends_on:
-      - backend
 
