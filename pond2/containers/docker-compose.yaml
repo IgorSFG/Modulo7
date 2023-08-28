@@ -22,12 +22,12 @@ services:
     depends_on:
       - postgres
 
-  backend:
+  application:
     build:
-      context: ./backend
+      context: ./application
       dockerfile: Dockerfile
     restart: always
-    container_name: backend
+    container_name: application
     ports:
       - "8000:8000"
     depends_on:
