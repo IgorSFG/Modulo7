@@ -1,8 +1,10 @@
 # Projeto Pokelist
 
-O projeto pokelist é uma solução containerizada web que possibilita os usuários registrarem anotações em um banco de dados, e nada mais legal que notas sobre POKEMONS! Ele teve seu desenvolvimento a partir das tecnologias de html, css, javascript e docker.
+O projeto pokelist é uma solução containerizada web que possibilita os usuários registrarem anotações em um banco de dados, e nada mais legal que notas sobre POKEMONS! Ele teve seu desenvolvimento a partir das tecnologias de html, css, javascript, PostgreSQL e docker.
 
-# Como o Pokelist foi feito?
+# Como o Pokelist funciona?
+
+Primeiramente, o projeto se inicia em uma página de login, que ao serem inseridas as credências corretamente, permite o acesso do usuário à galeria de pokemons, uma página protegida via webtokens. Lá, o usuário pode adicionar imagens com seus respectivos nomes, editá-los ou quem sabe até apagá-los.
 
 ## Estrutura das Pastas
 
