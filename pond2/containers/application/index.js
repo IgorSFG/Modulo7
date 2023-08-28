@@ -5,7 +5,7 @@ const path = require('path');
 const db = require('./db');
 
 const app = express();
-const PORT = 8000;
+const PORT = 5000;
 const secretKey = 'MySecretKey';
 
 app.use(express.json());
