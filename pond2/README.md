@@ -41,7 +41,7 @@ A imagem pode ser encontrada [no meu repositório](https://hub.docker.com/reposi
 docker pull igorsfg/pokeapp:1.0
 ```
 
-Clone esse repositório e execute a aplicação containerizada com o comando:
+Clone esse repositório, vá para o diretório "/containers" e execute o comando:
 ```
 docker compose up
 ```
