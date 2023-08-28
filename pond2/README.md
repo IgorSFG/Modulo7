@@ -18,6 +18,6 @@ Pokelist é uma aplicação de multiplos containers. A arquitetura da solução 
 ```
 
 # Arquitetura da Solução
-[!Pokelist](Pokelist.jpg)
+![Pokelist](https://github.com/IgorSFG/RoboDigital/blob/main/Pokelist.jpg)
 
 # Pokelist em Ação!
