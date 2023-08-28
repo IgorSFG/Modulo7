@@ -4,8 +4,6 @@ O projeto pokelist é uma solução containerizada web que possibilita os usuár
 
 # Como o Pokelist foi feito?
 
-Pokelist é uma aplicação de multiplos containers.
-
 ## Estrutura das Pastas
 
 ```
