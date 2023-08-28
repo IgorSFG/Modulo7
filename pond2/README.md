@@ -41,9 +41,9 @@ A imagem pode ser encontrada [no meu repositório](https://hub.docker.com/reposi
 docker pull igorsfg/pokeapp:1.0
 ```
 
-Para sua execução containerizada, basta usar o comando:
+Clone esse repositório e execute a aplicação containerizada com o comando:
 ```
 docker compose up
 ```
 
-Após a execução, o Pokelist irá aparecer [AQUI :D](http:127.0.0.1:8000)
+Após a execução, o Pokelist irá aparecer [AQUI :D](http://127.0.0.1:5000)
