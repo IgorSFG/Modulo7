@@ -1,16 +1,4 @@
-# Avaliacoes-M7-Inteli
-Avaliações do Módulo 7
+[Meu Repositório do frontend.](https://hub.docker.com/repository/docker/igorsfg/prova1-frontend/tags)
+[Meu Repositório do backend.](https://hub.docker.com/repository/docker/igorsfg/prova1-backend/tags)
 
-Para executar o backend:
-
-```bash
-python main.py
-```
-
-Para executar o frontend:
-
-```bash
-node server.js
-```
-
-| ***IMPORTANTE:*** Utilizar dentro do contexto do container.
+Escolhi fazer containers para ambos, frontend e backend, para funcionarem independentes um do outro.

@@ -1,16 +1,5 @@
 version: '3.1'
-services:   
-   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    restart: always
-    container_name: frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db 
-
+services: 
   backend:
     build:
       context: ./backend
@@ -19,5 +8,12 @@ services:
     container_name: backend
     ports:
       - "8000:8000"
-    depends_on:
-      - db
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: always
+    container_name: frontend
+    ports:
+      - "3000:3000"
