@@ -1,49 +1,40 @@
-# Projeto Pokelist
+# Projeto Predição Acidente Fatal
+O projeto tem como objetivo a criação de um container com todo o conteúdo necessário para execução de um modelo preditivo previamente processado e treinado. A ideia, é que utilizando do dataset [Brazil: Total highway crashes 2010 - 2023](https://www.kaggle.com/datasets/liamarguedas/brazil-total-highway-crashes-2010-2023) seja possível prever se um acidente fatal ocorrerá em circunstâncias específicas.
 
-O projeto pokelist é uma solução containerizada web que possibilita os usuários registrarem anotações em um banco de dados, e nada mais legal que notas sobre POKEMONS! Ele teve seu desenvolvimento a partir das tecnologias de html, css, javascript, postgresql e docker.
+# Desenvolvimento do Predição Acidente Fatal
 
-# Como o Pokelist funciona?
+## Colab Notebok
+- Responsável pela análise e limpeza dos dados: Aqui, o dataset sera analisado e transformado de forma a garantir uma boa performace do modelo.
 
-Primeiramente, o projeto se inicia em uma página de login, que ao serem inseridas as credências corretamente, permite o acesso do usuário à galeria de pokemons, uma página protegida via webtokens. Lá, o usuário pode adicionar imagens com seus respectivos nomes, editá-los ou quem sabe até apagá-los.
+- Responsável pela criação do modelo preditivo: Utilizando Auto ML, foi possível a escolha do melhor modelo preditivo com base o dataset já transformado. O modelo escolhido foi o `LGBMRegressor` devido a sua alta acurácidade.
 
-## Estrutura das Pastas
+- Responsável por salvar o modelo: Após a escolha do melhor modelo, ele é salvo e utilizado nas próximas etapas do projeto.
 
+link do Colab: https://colab.research.google.com/drive/1RU2hxklvHV51zTKbbugGzcwUaYo3LdCb?usp=sharing
+
+## API
+- Desenvolvida em python utilizando o framework fastapi, ela tem o objetivo de receber as requisições de predição e então responde-las.
+
+- O processo de predição é feito através do arquivo `crashes.pkl`, o modelo salvo na etapa anterior, enquanto as funções e definições da API estão presentes no arquivo `main.py`.
+
+## Docker
+- Para a aplicação funcionar em qualquer dispositivo, foi pensado uma aplicação containerizada, com todos os requisitos e funções para o funcionamento do Predição Acidente Fatal.
+
+- Os requisitos estão presentes no arquivo `requirements.txt`, enquanto o responsável pela criação da imagem a ser containerizada e suas funções está no `Dockerfile`.
+
+
+# Predição Acidente Fatal em Ação!
+
+A imagem do projeto pode ser encontrada [no meu repositório do Docker Hub](https://hub.docker.com/repository/docker/igorsfg/predicao_acidente_fatal/tags), bastando-se apenas baixar a imagem com:
 ```
-└───containers
-    ├───application
-    |   ├───node_modules
-    |   └───frontend
-    |       ├───pages
-    |       └───scripts
-    └───db
-```
-
-Para o funcionamento do pokelist foi idealizado uma estrutura de 7 pastas:
-- containers: considerada a pasta raíz do projeto, ela armazena todo o conteudo para aplicação da solução containerizada.
-- application: armazena a aplicação web. Itens como o frontend, servidor, lista de dependências e a pasta node_modules para seu armazenamento, arquivo para manipulçao do banco dos dados e o Dockerfile para configuração da imagem respectiva estão inseridos nessa pasta.
-- frontend: pasta armazenada no application. Ela é responsável por toda a interface da aplicação. Nela está contida o arquivo style.css para customização do layot das páginas, e as pastas pages e scripts, que guardam a estrutura delas em html e suas funcionalidades em javascript respectivamente.
-- db: esão armazenados o arquivo de inicialização da tabela com os valores de teste do usuário, e seu arquivo Dockerfile respectivo para criação da imagem.
-
-# Arquitetura da Solução
-![Pokelist](https://github.com/IgorSFG/Modulo7/blob/main/pond2/Pokelist.jpg)
-
-A arquitetura da solução consiste em 2 containers, um para disponibilizar o banco de dados, enquanto outro ficaria com a aplicação em si. Ela foi idealizada dessa maneira, pois como o javascript é uma linguagem de programação voltada a web, suas funções costumam necessitar de tal para terem êxito em seu funcionamento, e para serem disponibilizadas nesse ambiente, precisam ser enviados por um servidor, sendo este o backend, tirando todo o sentido de separar as duas composições do sistema (backend e frontend).
-
-A arquitetura consiste em 4 blocos principais:
-- Backend: responsável por ativar o servidor e definir as rotas e suas respectivas funções, como envio de arquivos e rquisições ao banco de dados do postgres.
-- Banco de dados do postgres: responsável por armazenar a tabela de usuarios logados no sistema e seus respectivos dados, como nome e senha. 
-- Frontend: responsável pela estruta das páginas e suas funcionalidades, como inserção de texto e imagens, ele realiza requisições para o backend e se conecta com o supabase para o envio e recebimento de dados.
-- Banco de dados do Supabase: responsável por disponibilizar o bucket para armazenamento de arquivos de imagem.
-
-# Pokelist em Ação!
-A imagem pode ser encontrada [no meu repositório](https://hub.docker.com/repository/docker/igorsfg/pokeapp/tags), basta apenas baixar a imagem com:
-```
-docker pull igorsfg/pokeapp:1.0
+docker pull igorsfg/predicao_acidente_fatal:1.0
 ```
 
-Clone esse repositório, vá para o diretório "/containers" e execute o comando:
+Para a execução containerizada da API com o modelo preditivo, basta usar o comando:
 ```
-docker compose up
+docker run -p 8000:80 igorsfg/predicao_acidente_fatal:1.0
 ```
 
-Após a execução, o Pokelist irá aparecer [AQUI :D](http://127.0.0.1:5000)
+Após a execução, a API com o modelo de predição estará disponível [AQUI :D](http:127.0.0.1:8000/docs)
+
+Também há um [VÍDEO](https://drive.google.com/file/d/1cDkbf2nLi21AZX7iA-N03MeXWpeqPUW6/view?usp=sharing) que mostra o funcionamento do modelo.
