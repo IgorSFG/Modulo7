@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pycaret
+pandas
+numpy
+pydantic
+unidecode
+requests
+streamlit
+psycopg2-binary
+PyJWT
