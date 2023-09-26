@@ -11,8 +11,8 @@ if response.status_code != 200:
     st.stop()
 
 # Streamlit UI
-st.title(f"Bem vindo {response.json()['username']}!")
-st.title("Predição Acidente Fatal")
+st.title(f"Bem vindo, {response.json()['username']}!")
+st.title("Predição Acidente Fatal Final")
 st.header("Insira os valores para predição")
 
 # Input
@@ -26,6 +26,9 @@ if st.button("Predizer"):
     response = requests.post(predict_url, json={"vehicle": vehicle, "local": local, "way": way, "time": time})
     data = response.json()
     if response.status_code == 200:
-        st.success(f"Response: {data}")
+        prediction = f"{round(data['prediction'] * 100, 2)}%"
+        result = data['result']
+        st.success(f"Probabilidade: {prediction}")
+        st.success(f"Resultado: {result}")
     else:
         st.error(f"Response: {data}")

@@ -10,7 +10,6 @@ app = FastAPI()
 model = load_model("crashes")
 secret_key = "your_secret_key"
 algorithm = "HS256"
-token = ""
 
 def create_token(username, userpassword):
     expiration_time = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
@@ -26,13 +25,18 @@ def create_token(username, userpassword):
 def decode_token():
     try:
         payload = jwt.decode(token, secret_key, algorithms=[algorithm])
-        return payload['username']
+        print(payload)
+        username = payload['username']
+        return {"username": username}
     
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Signature has expired")
     
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token")
+    
+    except Exception as e:
+        raise HTTPException(status_code=401, detail="Not authorized")
     
 
 class DataModel(BaseModel):
@@ -158,6 +162,7 @@ async def login(credential: Credential):
 
     print(rows)
 
+    global token
     token = create_token(username, userpassword)
     
     return {

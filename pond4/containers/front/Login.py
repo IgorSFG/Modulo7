@@ -17,6 +17,6 @@ if st.button("Login"):
         response = requests.post(login_url, json={"username": username, "userpassword": userpassword})
         data = response.json()
         if response.status_code == 200:
-                st.success(data)
+                st.success(data['message'])
         else:
                 st.error(data)
