@@ -8,13 +8,15 @@ Responsável pela análise e limpeza dos dados: Aqui, o [dataset](https://www.ka
 
 link do Colab: https://colab.research.google.com/drive/1RU2hxklvHV51zTKbbugGzcwUaYo3LdCb?usp=sharing
 
-## API
-Desenvolvida em python utilizando o framework fastapi, ela tem o objetivo de receber as requisições de predição via a página predições, que utiliza o framework streamlit, para então responde-las.
+## Backend
+Desenvolvido em python utilizando o framework fastapi, ela tem o objetivo de receber as requisições de predição via a página predições, que utiliza o framework streamlit, para então responde-las.
+
+## Frontend
+
+## Database
 
 ## Docker
-- Para a aplicação funcionar em qualquer dispositivo, foi pensado uma aplicação containerizada, com todos os requisitos e funções para o funcionamento do Predição Acidente Fatal.
-
-- Os requisitos estão presentes no arquivo `requirements.txt`, enquanto o responsável pela criação da imagem a ser containerizada e suas funções está no `Dockerfile`.
+- Para a aplicação funcionar em qualquer dispositivo, a containerização dos componentes, com todos os requisitos e funções para o funcionamento, fazem com que isso seja possível.
 
 - A imagem do backend do projeto pode ser encontrada em: https://hub.docker.com/repository/docker/igorsfg/paff-back/tags
   
@@ -28,12 +30,43 @@ docker pull igorsfg/paff-back
 docker pull igorsfg/paff-front
 ```
 
+## Nuvem
+Intalação das bases:
+```
+sudo apt update
+sudo apt upgrade
+sudo apt install python3 python3-pip -y
+```
+
+Instalação do Docker:
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+Clonar o Github:
+```
+git clone https://github.com/IgorSFG/Modulo7.git
+cd Modulo7/pond4/containers
+```
 
 # Predição Acidente Fatal Final em Ação!
 
-Para a execução containerizada da API com o modelo preditivo, basta usar o comando:
+Para a execução containerizada da API na Nuvem, bastou-se usar o comando:
 ```
-docker run -p 8000:80 igorsfg/predicao_acidente_fatal:1.0
+docker compose up
 ```
 
 Após a execução, a API com o modelo de predição estará disponível [AQUI :D](http:127.0.0.1:8000/docs)
