@@ -16,13 +16,20 @@ Desenvolvida em python utilizando o framework fastapi, ela tem o objetivo de rec
 
 - Os requisitos estão presentes no arquivo `requirements.txt`, enquanto o responsável pela criação da imagem a ser containerizada e suas funções está no `Dockerfile`.
 
+- A imagem do backend do projeto pode ser encontrada em: https://hub.docker.com/repository/docker/igorsfg/paff-back/tags
+  
+- A imagem do frontend do projeto pode ser encontrada em: https://hub.docker.com/repository/docker/igorsfg/paff-front/tags
+
+- Para baixar as imagens, basta usar os comandos:
+```
+docker pull igorsfg/paff-back
+```
+```
+docker pull igorsfg/paff-front
+```
+
 
 # Predição Acidente Fatal Final em Ação!
-
-A imagem do projeto pode ser encontrada [no meu repositório do Docker Hub](https://hub.docker.com/repository/docker/igorsfg/predicao_acidente_fatal/tags), bastando-se apenas baixar a imagem com:
-```
-docker pull igorsfg/predicao_acidente_fatal:1.0
-```
 
 Para a execução containerizada da API com o modelo preditivo, basta usar o comando:
 ```
