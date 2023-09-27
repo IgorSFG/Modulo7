@@ -66,7 +66,7 @@ cd Modulo7/pond4/containers
 
 Para a execução containerizada da API na Nuvem, bastou-se usar o comando:
 ```
-docker compose up
+sudo docker compose up
 ```
 
 Após a execução, a API com o modelo de predição estará disponível [AQUI :D](http:127.0.0.1:8000/docs)
