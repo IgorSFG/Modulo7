@@ -71,4 +71,4 @@ sudo docker compose up
 
 Após a execução, a API com o modelo de predição estará disponível [AQUI :D](http:127.0.0.1:8000/docs)
 
-Também há um [VÍDEO](https://drive.google.com/file/d/1cDkbf2nLi21AZX7iA-N03MeXWpeqPUW6/view?usp=sharing) que mostra o funcionamento do modelo.
+Também há um [VÍDEO](https://drive.google.com/file/d/1u1VuUxDFXzzuEFuzf1IlfFkG-M1Qef2w/view?usp=sharing) que mostra o funcionamento do modelo.
