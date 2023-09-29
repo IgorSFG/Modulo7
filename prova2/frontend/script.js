@@ -2,7 +2,7 @@ function addTask() {
   const taskInput = document.getElementById("taskInput");
   const taskText = taskInput.value.trim();
 
-  const HOST = "44.203.174.217"
+  const HOST = "54.197.181.216"
 
   if (taskText !== "") {
     //Realizar um POST com fetch para enviar os dados para o backend
