@@ -40,6 +40,7 @@ if 'usuario' not in inspector.get_table_names():
     # A tabela não existe, então vamos criá-la
     Base.metadata.create_all(bind=engine)
 
+try:
     #Novo usuário
     novo_usuario = Usuario(username='teste', senha='teste123')
 
@@ -48,6 +49,9 @@ if 'usuario' not in inspector.get_table_names():
 
     # Confirmar a transação para inserir o usuário no banco de dados
     db.commit()
+
+except Exception as e:
+    print(e)
 
 # Certifique-se de fechar a sessão quando terminar
 db.close()
