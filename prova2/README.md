@@ -16,3 +16,7 @@ Para o deploy na cloud, foram utilizados 2 serviços e 3 instâncias
 - Serviço de banco de dados da AWS. Ele será o respnsável por armazenar os dados para aplicação.
 
 - O banco de dados foi nomeado como `database-1`
+
+<img src="./media/Captura de Tela (2671).png" display="flex">
+<img src="./media/Captura de Tela (2672).png" display="flex">
+<img src="./media/Captura de Tela (2673).png" display="flex">
