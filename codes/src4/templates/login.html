@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/style.css">
+  <title>Login Page</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="text" placeholder="Username" id="username" class="input-text">
+                <input type="password" placeholder="Password" id="password" class="input-text">
+                <button class="btn" type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    function handleLogin() {
+        console.log('handleLogin()');
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+      
+        fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password })
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.access_token) {
+              localStorage.setItem('access_token', data.access_token);
+              window.alert(`Login realizado com sucesso! ${data.access_token}`);
+            } else {
+              console.log('Erro ao fazer login:', data.error);
+              alert('Erro ao fazer login.');
+            }
+          })
+          .catch(error => {
+            console.error('Erro na requisição:', error);
+            alert('Erro na requisição.');
+          });
+      }      
+</script>
+</html>
